@@ -23,14 +23,6 @@
             padding: 20px;
             box-sizing: border-box;
         }
-        .buttons-wrapper {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            width: 100%;
-            max-width: 800px;
-        }
         .button {
             background-color: #ffffff;
             color: #8533f1;
@@ -45,6 +37,7 @@
             border-radius: 12px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: background-color 0.3s, color 0.3s, transform 0.3s;
+            margin-bottom: 10px;
         }
         .button:hover {
             transform: translateY(-3px);
@@ -65,40 +58,48 @@
             display: none;
             flex-direction: column;
             align-items: center;
-            background-color: rgba(255, 255, 255, 0.9);
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.95);
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             z-index: 1002;
             color: #333;
             padding: 20px;
             border-radius: 10px;
-            animation: slideIn 0.3s ease-in-out;
-        }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(50px); }
-            to { opacity: 1; transform: translateY(0); }
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            width: 80%;
+            max-width: 500px;
         }
         .theme-options {
             display: flex;
-            justify-content: center;
-            align-items: center;
             flex-wrap: wrap;
+            justify-content: center;
             gap: 10px;
-            margin-top: 20px;
         }
-        .theme-options button {
-            margin: 10px;
-            padding: 10px 20px;
+        .theme-button {
             border: none;
-            border-radius: 5px;
+            padding: 10px 20px;
             cursor: pointer;
-            transition: background-color 0.2s, color 0.2s;
+            font-size: 1em;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: transform 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        .theme-options button:hover {
-            opacity: 0.8;
+        .theme-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        .close-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5em;
+            position: absolute;
+            top: 10px;
+            right: 10px;
         }
         .logo {
             margin-bottom: 10px;
@@ -118,6 +119,16 @@
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
+        .filter-container {
+            margin-bottom: 20px;
+        }
+        .filter-select {
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -128,52 +139,93 @@
         <!-- Texto animado com gradiente -->
         <div class="gradient-text">Redações PT 3ºBIM</div>
 
-        <div class="buttons-wrapper">
-            <button class="button" onclick="window.location.href='https://studytask-ai.github.io/09-09-Portugu-s-/'">
-                09/09
-            </button>
-            <button class="button" onclick="window.location.href='https://sites.google.com/view/cpiadestudytask/reda%C3%A7%C3%A3o-de-portugu%C3%AAs-0708?authuser=0'">
-                07/08
-            </button>
-            <button class="button" onclick="window.location.href='https://sites.google.com/view/cpiadestudytask/reda%C3%A7%C3%A3o-0508-portugu%C3%AAs?authuser=0'">
-                05/08
-            </button>
+        <!-- Filtro por mês usando um menu suspenso -->
+        <div class="filter-container">
+            <select class="filter-select" onchange="filterByMonth(this.value)">
+                <option value="all">Todos os Meses</option>
+                <option value="08">Agosto</option>
+                <option value="09">Setembro</option>
+            </select>
         </div>
 
-        <div class="settings-icon" onclick="showThemeSetup()">⋮</div>
-        <div class="theme-setup" id="themeSetup">
-            <button class="close-button" onclick="closeThemeSetup()">✖</button>
-            <h2>Configurar Tema</h2>
-            <div class="theme-options">
-                <button style="background-color: #ff2f2f;" onclick="setTheme('#ff2f2f', '#ffffff')">Vermelho</button>
-                <button style="background-color: #ffffff; color: #000000;" onclick="setTheme('#ffffff', '#000000')">Branco</button>
-                <button style="background-color: #000000;" onclick="setTheme('#000000', '#ffffff')">Preto</button>
-                <button style="background-color: #AD7DEC;" onclick="setTheme('#AD7DEC', '#ffffff')">Lilás</button>
-                <button style="background-color: #070a08;" onclick="setTheme('#070a08', '#ffffff')">Verde Escuro</button>
-                <button style="background-color: #8533f1;" onclick="setTheme('#8533f1', '#ffffff')">Roxo</button>
-            </div>
+        <div class="button" data-month="09" onclick="window.location.href='https://studytask-ai.github.io/09-09-Portugu-s-/'">
+            09/09 - Português
+        </div>
+        <div class="button" data-month="08" onclick="window.location.href='https://sites.google.com/view/cpiadestudytask/reda%C3%A7%C3%A3o-de-portugu%C3%AAs-0708?authuser=0'">
+            07/08 - Português
+        </div>
+        <div class="button" data-month="08" onclick="window.location.href='https://sites.google.com/view/cpiadestudytask/reda%C3%A7%C3%A3o-0508-portugu%C3%AAs?authuser=0'">
+            05/08 - Português
+        </div>
+
+        <div class="settings-icon" onclick="showThemeSetup()">⚙️</div>
+    </div>
+
+    <!-- Modal de configuração de tema -->
+    <div class="theme-setup" id="themeSetup">
+        <button class="close-button" onclick="closeThemeSetup()">✖</button>
+        <h2>Configuração de Tema</h2>
+        <div class="theme-options">
+            <button class="theme-button" style="background-color: #ff2f2f;" onclick="setTheme('#ff2f2f', '#ffffff')">Vermelho</button>
+            <button class="theme-button" style="background-color: #ffffff; color: #000000;" onclick="setTheme('#ffffff', '#000000')">Branco</button>
+            <button class="theme-button" style="background-color: #000000;" onclick="setTheme('#000000', '#ffffff')">Preto</button>
+            <button class="theme-button" style="background-color: #AD7DEC;" onclick="setTheme('#AD7DEC', '#ffffff')">Lilás</button>
+            <button class="theme-button" style="background-color: #070a08;" onclick="setTheme('#070a08', '#ffffff')">Verde Escuro</button>
+            <button class="theme-button" style="background-color: #8533f1;" onclick="setTheme('#8533f1', '#ffffff')">Roxo</button>
+            <button class="theme-button" style="background-color: #f39c12;" onclick="setTheme('#f39c12', '#ffffff')">Laranja</button>
+            <button class="theme-button" style="background-color: #3498db;" onclick="setTheme('#3498db', '#ffffff')">Azul</button>
+            <button class="theme-button" style="background-color: #2ecc71;" onclick="setTheme('#2ecc71', '#ffffff')">Verde Claro</button>
         </div>
     </div>
 
     <script>
         const themeSetup = document.getElementById('themeSetup');
 
+        // Mostrar modal de configuração de tema
         function showThemeSetup() {
             themeSetup.style.display = 'flex';
         }
 
+        // Fechar modal de configuração de tema
         function closeThemeSetup() {
             themeSetup.style.display = 'none';
         }
 
+        // Definir tema e salvar no localStorage
         function setTheme(bgColor, buttonColor) {
             document.body.style.backgroundColor = bgColor;
-            const buttons = document.querySelectorAll('.button');
+            const buttons = document.querySelectorAll('.button, .filter-button, .filter-select');
             buttons.forEach(button => {
                 button.style.backgroundColor = buttonColor;
                 button.style.color = bgColor;
             });
+            // Salvar tema no localStorage
+            localStorage.setItem('theme', JSON.stringify({ bgColor, buttonColor }));
         }
+
+        // Aplicar tema armazenado
+        function applyStoredTheme() {
+            const storedTheme = localStorage.getItem('theme');
+            if (storedTheme) {
+                const { bgColor, buttonColor } = JSON.parse(storedTheme);
+                setTheme(bgColor, buttonColor);
+            }
+        }
+
+        // Filtrar botões por mês
+        function filterByMonth(month) {
+            const buttons = document.querySelectorAll('.button[data-month]');
+            buttons.forEach(button => {
+                if (month === 'all' || button.getAttribute('data-month') === month) {
+                    button.style.display = 'block';
+                } else {
+                    button.style.display = 'none';
+                }
+            });
+        }
+
+        // Aplicar tema armazenado ao carregar a página
+        window.onload = applyStoredTheme;
     </script>
 </body>
 </html>
