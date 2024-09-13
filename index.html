@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyTask</title>
+    <style>
+        body {
+            background-color: #8533f1;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            text-align: center;
+            margin: 0;
+            overflow-x: hidden;
+            transition: background-color 0.2s;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .buttons-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            width: 100%;
+            max-width: 800px;
+        }
+        .button {
+            background-color: #ffffff;
+            color: #8533f1;
+            border: none;
+            padding: 20px 40px;
+            width: 100%;
+            max-width: 250px;
+            box-sizing: border-box;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, color 0.3s, transform 0.3s;
+        }
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        .settings-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            font-size: 1.5em;
+            transition: transform 0.2s;
+        }
+        .settings-icon:hover {
+            transform: rotate(90deg);
+        }
+        .theme-setup {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1002;
+            color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            animation: slideIn 0.3s ease-in-out;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .theme-options {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .theme-options button {
+            margin: 10px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .theme-options button:hover {
+            opacity: 0.8;
+        }
+        .logo {
+            margin-bottom: 10px;
+        }
+        .gradient-text {
+            font-size: 2.5em;
+            font-weight: bold;
+            background: linear-gradient(270deg, #ff7e5f, #feb47b, #ff7e5f, #ff2f2f, #ff7e5f);
+            background-size: 600% 600%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientAnimation 5s ease infinite;
+            margin-bottom: 20px;
+        }
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Ícone -->
+        <img src="https://raw.githubusercontent.com/Luanzinh0fc/Luanzinh0fc-Banco-de-dados-p-blicos/main/1000008714-removebg.png" alt="Ícone" class="logo" width="100" height="100">
+        
+        <!-- Texto animado com gradiente -->
+        <div class="gradient-text">Redações PT 3ºBIM</div>
+
+        <div class="buttons-wrapper">
+            <button class="button" onclick="window.location.href='https://studytask-ai.github.io/09-09-Portugu-s-/'">
+                09/09
+            </button>
+            <button class="button" onclick="window.location.href='https://sites.google.com/view/cpiadestudytask/reda%C3%A7%C3%A3o-de-portugu%C3%AAs-0708?authuser=0'">
+                07/08
+            </button>
+            <button class="button" onclick="window.location.href='https://sites.google.com/view/cpiadestudytask/reda%C3%A7%C3%A3o-0508-portugu%C3%AAs?authuser=0'">
+                05/08
+            </button>
+        </div>
+
+        <div class="settings-icon" onclick="showThemeSetup()">⋮</div>
+        <div class="theme-setup" id="themeSetup">
+            <button class="close-button" onclick="closeThemeSetup()">✖</button>
+            <h2>Configurar Tema</h2>
+            <div class="theme-options">
+                <button style="background-color: #ff2f2f;" onclick="setTheme('#ff2f2f', '#ffffff')">Vermelho</button>
+                <button style="background-color: #ffffff; color: #000000;" onclick="setTheme('#ffffff', '#000000')">Branco</button>
+                <button style="background-color: #000000;" onclick="setTheme('#000000', '#ffffff')">Preto</button>
+                <button style="background-color: #AD7DEC;" onclick="setTheme('#AD7DEC', '#ffffff')">Lilás</button>
+                <button style="background-color: #070a08;" onclick="setTheme('#070a08', '#ffffff')">Verde Escuro</button>
+                <button style="background-color: #8533f1;" onclick="setTheme('#8533f1', '#ffffff')">Roxo</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const themeSetup = document.getElementById('themeSetup');
+
+        function showThemeSetup() {
+            themeSetup.style.display = 'flex';
+        }
+
+        function closeThemeSetup() {
+            themeSetup.style.display = 'none';
+        }
+
+        function setTheme(bgColor, buttonColor) {
+            document.body.style.backgroundColor = bgColor;
+            const buttons = document.querySelectorAll('.button');
+            buttons.forEach(button => {
+                button.style.backgroundColor = buttonColor;
+                button.style.color = bgColor;
+            });
+        }
+    </script>
+</body>
+</html>
