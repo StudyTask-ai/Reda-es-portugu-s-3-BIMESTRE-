@@ -5,24 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StudyTask</title>
     <style>
-        body {
-            background-color: #8533f1;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: white;
-            text-align: center;
+        body, html {
             margin: 0;
-            overflow-x: hidden;
-            transition: background-color 0.2s;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #8533f1;
+            color: white;
+            transition: background-color 0.3s, color 0.3s;
+            font-family: 'Arial', sans-serif;
         }
+        
         .container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             min-height: 100vh;
             padding: 20px;
             box-sizing: border-box;
+            overflow-y: auto;
+            height: 100vh;
         }
+        
+        .buttons-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            width: 100%;
+            max-width: 800px;
+        }
+        
         .button {
             background-color: #ffffff;
             color: #8533f1;
@@ -36,13 +51,57 @@
             font-weight: bold;
             border-radius: 12px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s, color 0.3s, transform 0.3s;
+            transition: transform 0.3s;
             margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
+        
+        .button.small {
+            padding: 10px 20px;
+            font-size: 0.9em;
+        }
+        
+        .button.medium {
+            padding: 20px 40px;
+            font-size: 1.1em;
+        }
+        
+        .button.large {
+            padding: 30px 60px;
+            font-size: 1.3em;
+        }
+        
+        .button.narrow {
+            max-width: 150px;
+        }
+        
+        .button.normal {
+            max-width: 250px;
+        }
+        
+        .button.wide {
+            max-width: 350px;
+        }
+
+        .button img {
+            margin-right: 10px;
+            width: 30px;
+            height: 30px;
+        }
+        
         .button:hover {
             transform: translateY(-3px);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
+        
+        .logo {
+            margin-bottom: 10px;
+            width: 100px;
+            height: 100px;
+        }
+        
         .settings-icon {
             position: absolute;
             top: 20px;
@@ -51,59 +110,114 @@
             font-size: 1.5em;
             transition: transform 0.2s;
         }
+        
         .settings-icon:hover {
             transform: rotate(90deg);
         }
-        .theme-setup {
+        
+        .theme-options {
             display: none;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            background-color: rgba(255, 255, 255, 0.95);
+            justify-content: flex-start;
+            background-color: rgba(0, 0, 0, 0.8);
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 1002;
-            color: #333;
+            color: #fff;
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 12px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
             width: 80%;
             max-width: 500px;
+            overflow-y: auto;
+            max-height: 80vh;
         }
-        .theme-options {
+        
+        .color-slider {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
+            overflow-x: auto;
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
         }
+        
+        .color-slider input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 15px;
+            background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+            border-radius: 5px;
+            outline: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .color-slider input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .close-button {
+            align-self: flex-end;
+            font-size: 1em;
+            color: #fff;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        
+        .close-button:hover {
+            color: #ff7e5f;
+            transform: scale(1.1);
+        }
+        
+        .apply-button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #8533f1;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .apply-button:hover {
+            background-color: #6f29c6;
+            transform: translateY(-2px);
+        }
+        
         .theme-button {
+            margin: 5px;
             border: none;
             padding: 10px 20px;
             cursor: pointer;
             font-size: 1em;
             font-weight: bold;
             border-radius: 8px;
-            transition: transform 0.3s;
+            transition: transform 0.3s, background-color 0.3s;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
+        
         .theme-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            background-color: #444;
         }
-        .close-button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1.5em;
-            position: absolute;
-            top: 10px;
-            right: 10px;
-        }
-        .logo {
-            margin-bottom: 10px;
-        }
+
         .gradient-text {
             font-size: 2.5em;
             font-weight: bold;
@@ -114,14 +228,11 @@
             animation: gradientAnimation 5s ease infinite;
             margin-bottom: 20px;
         }
-        @keyframes gradientAnimation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+
         .filter-container {
             margin-bottom: 20px;
         }
+
         .filter-select {
             padding: 10px;
             font-size: 1em;
@@ -129,16 +240,26 @@
             border: none;
             cursor: pointer;
         }
+
+        @media (max-width: 600px) {
+            .splash-text {
+                font-size: 2em;
+            }
+            .logo {
+                width: 80px;
+                height: 80px;
+            }
+            .settings-icon {
+                font-size: 1.2em;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Ícone -->
-        <img src="https://raw.githubusercontent.com/Luanzinh0fc/Luanzinh0fc-Banco-de-dados-p-blicos/main/1000008714-removebg.png" alt="Ícone" class="logo" width="100" height="100">
-        
-        <!-- Texto animado com gradiente -->
+    <div class="container" id="mainContent">
+        <img src="https://raw.githubusercontent.com/Luanzinh0fc/Luanzinh0fc-Banco-de-dados-p-blicos/main/1000008714-removebg.png" alt="Ícone" class="logo">
         <div class="gradient-text">Redações PT 3ºBIM</div>
-
+        
         <!-- Filtro por mês usando um menu suspenso -->
         <div class="filter-container">
             <select class="filter-select" onchange="filterByMonth(this.value)">
@@ -148,71 +269,103 @@
             </select>
         </div>
 
-        <div class="button" data-month="09" onclick="window.location.href='https://studytask-ai.github.io/09-09-Portugu-s-/'">
-            09/09 - Português
-        </div>
-        <div class="button" data-month="08" onclick="window.location.href='https://sites.google.com/view/cpiadestudytask/reda%C3%A7%C3%A3o-de-portugu%C3%AAs-0708?authuser=0'">
-            07/08 - Português
-        </div>
-        <div class="button" data-month="08" onclick="window.location.href='https://sites.google.com/view/cpiadestudytask/reda%C3%A7%C3%A3o-0508-portugu%C3%AAs?authuser=0'">
-            05/08 - Português
+        <div class="buttons-wrapper">
+            <button class="button medium normal" data-month="09" onclick="window.location.href='https://studytask-ai.github.io/09-09-Portugu-s-/'">
+                <img src="https://raw.githubusercontent.com/StudyTask-ai/Esse-cone-o-de-/main/PORTUGU%C3%8AS.gif" alt="Português Ícone">
+                09/09 - Português
+            </button>
+            <button class="button medium normal" data-month="08" onclick="window.location.href='https://sites.google.com/view/cpiadestudytask/reda%C3%A7%C3%A3o-de-portugu%C3%AAs-0708?authuser=0'">
+                <img src="https://raw.githubusercontent.com/StudyTask-ai/Esse-cone-o-de-/main/PORTUGU%C3%8AS.gif" alt="Português Ícone">
+                07/08 - Português
+            </button>
+            <button class="button medium normal" data-month="08" onclick="window.location.href='https://sites.google.com/view/cpiadestudytask/reda%C3%A7%C3%A3o-0508-portugu%C3%AAs?authuser=0'">
+                <img src="https://raw.githubusercontent.com/StudyTask-ai/Esse-cone-o-de-/main/PORTUGU%C3%8AS.gif" alt="Português Ícone">
+                05/08 - Português
+            </button>
         </div>
 
-        <div class="settings-icon" onclick="showThemeSetup()">⚙️</div>
+        <div class="settings-icon" onclick="toggleThemeOptions()">⚙️</div>
     </div>
 
-    <!-- Modal de configuração de tema -->
-    <div class="theme-setup" id="themeSetup">
-        <button class="close-button" onclick="closeThemeSetup()">✖</button>
-        <h2>Configuração de Tema</h2>
-        <div class="theme-options">
-            <button class="theme-button" style="background-color: #ff2f2f;" onclick="setTheme('#ff2f2f', '#ffffff')">Vermelho</button>
-            <button class="theme-button" style="background-color: #ffffff; color: #000000;" onclick="setTheme('#ffffff', '#000000')">Branco</button>
-            <button class="theme-button" style="background-color: #000000;" onclick="setTheme('#000000', '#ffffff')">Preto</button>
-            <button class="theme-button" style="background-color: #AD7DEC;" onclick="setTheme('#AD7DEC', '#ffffff')">Lilás</button>
-            <button class="theme-button" style="background-color: #070a08;" onclick="setTheme('#070a08', '#ffffff')">Verde Escuro</button>
-            <button class="theme-button" style="background-color: #8533f1;" onclick="setTheme('#8533f1', '#ffffff')">Roxo</button>
-            <button class="theme-button" style="background-color: #f39c12;" onclick="setTheme('#f39c12', '#ffffff')">Laranja</button>
-            <button class="theme-button" style="background-color: #3498db;" onclick="setTheme('#3498db', '#ffffff')">Azul</button>
-            <button class="theme-button" style="background-color: #2ecc71;" onclick="setTheme('#2ecc71', '#ffffff')">Verde Claro</button>
+    <div class="theme-options" id="themeOptions">
+        <button class="close-button" onclick="toggleThemeOptions()">Fechar Configurações</button>
+        <div class="config-section">
+            <h2>Personalizar Tema</h2>
+            <div class="color-slider">
+                <input type="range" min="0" max="360" value="0" id="hueRange">
+            </div>
+            <button class="apply-button" onclick="applyHueColor()">Aplicar Cor Personalizada</button>
+            <button class="apply-button" onclick="activateExtremeBlack()">Ativar Tema Extremamente Preto</button>
+        </div>
+        
+        <div class="config-section">
+            <h2>Configurações de Tamanho dos Botões</h2>
+            <button class="theme-button" onclick="setButtonSize('small')">Pequeno</button>
+            <button class="theme-button" onclick="setButtonSize('medium')">Médio</button>
+            <button class="theme-button" onclick="setButtonSize('large')">Grande</button>
+        </div>
+
+        <div class="config-section">
+            <h2>Configurações de Largura dos Botões</h2>
+            <button class="theme-button" onclick="setButtonWidth('narrow')">Estreito</button>
+            <button class="theme-button" onclick="setButtonWidth('normal')">Normal</button>
+            <button class="theme-button" onclick="setButtonWidth('wide')">Largo</button>
         </div>
     </div>
 
     <script>
-        const themeSetup = document.getElementById('themeSetup');
+        const themeOptions = document.getElementById('themeOptions');
+        const hueRange = document.getElementById('hueRange');
 
-        // Mostrar modal de configuração de tema
-        function showThemeSetup() {
-            themeSetup.style.display = 'flex';
+        function toggleThemeOptions() {
+            themeOptions.style.display = themeOptions.style.display === 'flex' ? 'none' : 'flex';
+            document.body.style.overflow = themeOptions.style.display === 'flex' ? 'hidden' : 'auto';
         }
 
-        // Fechar modal de configuração de tema
-        function closeThemeSetup() {
-            themeSetup.style.display = 'none';
+        function applyHueColor() {
+            const hueValue = hueRange.value;
+            const bgColor = `hsl(${hueValue}, 100%, 50%)`;
+            const textColor = `hsl(${hueValue}, 100%, 20%)`;
+            setTheme(bgColor, textColor);
         }
 
-        // Definir tema e salvar no localStorage
-        function setTheme(bgColor, buttonColor) {
-            document.body.style.backgroundColor = bgColor;
-            const buttons = document.querySelectorAll('.button, .filter-button, .filter-select');
+        function activateExtremeBlack() {
+            const buttons = document.querySelectorAll('.button');
             buttons.forEach(button => {
-                button.style.backgroundColor = buttonColor;
-                button.style.color = bgColor;
+                button.style.color = '#8533f1'; // Define a cor do texto dos botões como roxo
             });
-            // Salvar tema no localStorage
-            localStorage.setItem('theme', JSON.stringify({ bgColor, buttonColor }));
+            setTheme('#000000', '#8533f1'); // Fundo preto e texto roxo
         }
 
-        // Aplicar tema armazenado
-        function applyStoredTheme() {
-            const storedTheme = localStorage.getItem('theme');
-            if (storedTheme) {
-                const { bgColor, buttonColor } = JSON.parse(storedTheme);
-                setTheme(bgColor, buttonColor);
-            }
+        function setTheme(bgColor, textColor) {
+            document.body.style.backgroundColor = bgColor;
+            document.body.style.color = textColor;
+            const buttons = document.querySelectorAll('.button');
+            buttons.forEach(button => {
+                button.style.backgroundColor = '#ffffff';
+                button.style.color = textColor;
+            });
+            localStorage.setItem('theme', JSON.stringify({ bgColor, textColor }));
         }
 
-        // Filtrar botões por mês
+        function setButtonSize(size) {
+            const buttons = document.querySelectorAll('.button');
+            buttons.forEach(button => {
+                button.classList.remove('small', 'medium', 'large');
+                button.classList.add(size);
+            });
+            localStorage.setItem('buttonSize', size);
+        }
+
+        function setButtonWidth(width) {
+            const buttons = document.querySelectorAll('.button');
+            buttons.forEach(button => {
+                button.classList.remove('narrow', 'normal', 'wide');
+                button.classList.add(width);
+            });
+            localStorage.setItem('buttonWidth', width);
+        }
+
         function filterByMonth(month) {
             const buttons = document.querySelectorAll('.button[data-month]');
             buttons.forEach(button => {
@@ -224,8 +377,33 @@
             });
         }
 
-        // Aplicar tema armazenado ao carregar a página
-        window.onload = applyStoredTheme;
+        function applyStoredTheme() {
+            const storedTheme = localStorage.getItem('theme');
+            if (storedTheme) {
+                const { bgColor, textColor } = JSON.parse(storedTheme);
+                setTheme(bgColor, textColor);
+            }
+        }
+
+        function applyStoredButtonSize() {
+            const storedSize = localStorage.getItem('buttonSize');
+            if (storedSize) {
+                setButtonSize(storedSize);
+            }
+        }
+
+        function applyStoredButtonWidth() {
+            const storedWidth = localStorage.getItem('buttonWidth');
+            if (storedWidth) {
+                setButtonWidth(storedWidth);
+            }
+        }
+
+        window.onload = () => {
+            applyStoredTheme();
+            applyStoredButtonSize();
+            applyStoredButtonWidth();
+        };
     </script>
 </body>
 </html>
